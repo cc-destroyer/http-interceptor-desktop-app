@@ -5,5 +5,9 @@
 // Must live in src/main/: Electron derives the app path from the entry file's directory, and the
 // background renderer resolves modules via src/node_modules (-> release/app/node_modules) from there.
 const path = require("path");
+// Optional: RQ_REMOTE_DEBUG_PORT=9223 exposes Chrome DevTools Protocol for inspecting windows.
+if (process.env.RQ_REMOTE_DEBUG_PORT) {
+  require("electron").app.commandLine.appendSwitch("remote-debugging-port", process.env.RQ_REMOTE_DEBUG_PORT);
+}
 require("ts-node").register({ transpileOnly: true, project: path.join(__dirname, "../../tsconfig.json") });
 require("./main.ts");
