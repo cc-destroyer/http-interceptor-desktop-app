@@ -1,4 +1,5 @@
 import logger from "./logger";
+import { LOCAL_OFFLINE } from "../local/config";
 
 const isMain = process.type === "browser";
 const processType = isMain ? "main" : "background-process";
@@ -10,6 +11,7 @@ const { init } = isMain
 try {
   const sentryConfig = {
     dsn: "https://47cb67fb392b46e0b0fa6607f7fa204b@o407023.ingest.sentry.io/5275504",
+    enabled: !LOCAL_OFFLINE, // local fork: never send crash reports to Requestly
     environment: process.env.NODE_ENV || "production",
     initialScope: {
       tags: {

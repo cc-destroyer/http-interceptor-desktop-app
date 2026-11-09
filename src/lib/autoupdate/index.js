@@ -1,6 +1,7 @@
 import { autoUpdater } from "electron-updater";
 import { ipcMain } from "electron";
 import log from "electron-log";
+import { LOCAL_OFFLINE } from "../../local/config";
 
 // I hope you know what you are doing here
 //
@@ -87,6 +88,7 @@ class AutoUpdate {
     });
 
     ipcMain.handle("check-for-updates-and-notify", () => {
+      if (LOCAL_OFFLINE) return; // local fork: never pull Requestly's official build over this one
       autoUpdater.checkForUpdatesAndNotify();
     });
 
